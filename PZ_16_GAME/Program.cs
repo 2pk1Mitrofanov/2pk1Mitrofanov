@@ -13,7 +13,7 @@ namespace ConsoleApp8
         static int centerX = (Console.WindowWidth / 2) - 15;
         static int centerY = Console.WindowHeight / 2;
 
-        static byte enemies = 1;
+        static byte enemies = 10;
         static byte buffs = 5;
         static int health = 5;
 
