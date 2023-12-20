@@ -1,65 +1,47 @@
-﻿using System;
+using System;
 
 namespace ConsoleApp8
 {
     internal class Program
     {
-        // Размер карты
         static int mapSize = 25;
-        // Карта игрового мира
         static char[,] map = new char[mapSize, mapSize];
 
-         // Позиция игрока
         static int playerY = mapSize / 2;
         static int playerX = mapSize / 2;
 
-        // Центр окна консоли
         static int centerX = (Console.WindowWidth / 2) - 15;
         static int centerY = Console.WindowHeight / 2;
 
-        // Количество врагов, баффов и здоровья на карте
-        static byte enemies = 10;
+        static byte enemies = 1;
         static byte buffs = 5;
         static int health = 5;
 
-        // Параметры игрока
         static int playerHP = 50;
         static int playerStrong = 10;
         static int playerStepCount = 0;
 
-        // Флаг наличия баффа у игрока
         static bool hasBuff = false;
-        // Шаг, на котором был поднят бафф
         static int buffStep = 0;
-        // Сохраненные параметры баффа для восстановления
         static int savedBuffStep = 0;
         static bool savedHasBuff = false;
 
-        // Последнее действие игрока
         static string lastAction = "Начало игры";
 
-        // Параметры босса
         static int bossHP = 100;
         static int bossStrong = 39;
         static bool bossSpawned = false;
 
-        // Параметры врага
         static int enemyHP = 30;
         static int enemyStrong = 5;
-
-        // Главная функция программы
         static void Main(string[] args)
         {
-            // Устанавливаем заголовок консоли
-            Console.Title = "Game";
-            // Запускаем функцию начала игры
+            Console.Title = "Gamе2pk1";
             StartGame();
         }
 
-        // Генерация игровой карты
         static void GenerationMap()
         {
-            // Создаем объект для генерации случайных чисел
             Random random = new Random();
             //создание пустой карты
             for (int i = 0; i < mapSize; i++)
@@ -68,25 +50,21 @@ namespace ConsoleApp8
                 {
                     if (j == mapSize - 1)
                     {
-                        // Горизонтальная граница карты
                         Console.SetCursorPosition(i, j);
                         map[i, j] = '_';
                     }
                     else
                     {
-                        // Внутренние ячейки карты
                         map[i, j] = '_';
                     }
                 }
             }
 
-            // Размещаем игрока на карте
             map[playerY, playerX] = 'P';
 
             int x;
             int y;
 
-            // Размещаем врагов на карте
             while (enemies > 0)
             {
                 x = random.Next(0, mapSize);
@@ -99,7 +77,6 @@ namespace ConsoleApp8
                     enemies--;
                 }
             }
-            // Размещаем баффы на карте
             while (buffs > 0)
             {
                 x = random.Next(0, mapSize);
@@ -112,7 +89,6 @@ namespace ConsoleApp8
                 }
             }
 
-            // Размещаем аптечки на карте
             while (health > 0)
             {
                 x = random.Next(0, mapSize);
@@ -125,7 +101,6 @@ namespace ConsoleApp8
                 }
             }
 
-            // Обновляем отображение карты в консоли
             UpdateMap();
         }
 
@@ -254,6 +229,11 @@ namespace ConsoleApp8
                 playerStrong = 10;
                 lastAction = "Бафф закончился                        ";
             }
+            if (bossSpawned)
+            {
+                hasBuff = false;
+                playerStrong = 100;
+            }
         }
 
         static void AidUp()
@@ -354,6 +334,7 @@ namespace ConsoleApp8
                 {
                     bossSpawned = true;
                     playerStrong = 100;
+                    //playerHP = 40;
 
                     Random random = new Random();
                     int x, y;
